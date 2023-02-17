@@ -10,6 +10,4 @@ COPY . vertx-bug
 
 WORKDIR /home/jboss/vertx-bug
 RUN mvn clean install -DskipTests
-RUN cp /home/jboss/vertx-bug/target/*.jar /home/jboss/app.jar
-WORKDIR /home/jboss
-CMD java $JAVA_OPTS -cp .:* org.computate.vertx.bug.verticle.MainVerticle
+CMD mvn exec:java -Dexec.mainClass=org.computate.vertx.bug.verticle.QuarkusApp
