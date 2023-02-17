@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.computate</groupId>
+	<artifactId>vertx-bug</artifactId>
+	<version>1.0.1</version>
+	<name>Vert.x Bug Reproducer</name>
+	<description>A project for reproducing bugs in Vert.x</description>
+	<packaging>jar</packaging>
+
+	<licenses>
+		<license>
+			<name>GNU GENERAL PUBLIC LICENSE, Version 3</name>
+			<url>https://www.gnu.org/licenses/gpl-3.0.en.html</url>
+		</license>
+	</licenses>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/computate/vertx-bug/issues</url>
+	</issueManagement>
+
+	<organization>
+		<name>computate.org</name>
+		<url>https://www.computate.org/</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>Christopher Tate</name>
+			<organization>computate.org</organization>
+			<organizationUrl>https://www.computate.org/</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/computate/vertx-bug.git</connection>
+		<developerConnection>scm:git:ssh://github.com:computate/vertx-bug.git</developerConnection>
+		<url>http://github.com/computate/vertx-bug/tree/master</url>
+	</scm>
+
+	<repositories>
+		<repository>
+			<id>redhat-ga</id>
+			<name>Red Hat GA</name>
+			<url>https://maven.repository.redhat.com/ga/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+		<maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+		<vertx-maven-plugin.version>1.0.28</vertx-maven-plugin.version>
+		<build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
+		<exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
+		<nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+		<maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
+		<flatten-maven-plugin.version>1.3.0</flatten-maven-plugin.version>
+		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+		<maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+		<maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+		<postgresql.version>42.5.1</postgresql.version>
+		<junit.version>5.9.1</junit.version>
+		<mockito.version>4.10.0</mockito.version>
+		<vertx-base.version>4.3.8</vertx-base.version>
+		<vertx.version>${vertx-base.version}</vertx.version>
+		<jfreechart.version>1.5.3</jfreechart.version>
+		<handlebars.version>4.3.1</handlebars.version>
+		<flying-saucer.version>9.1.22</flying-saucer.version>
+		<openpdf.version>1.3.30</openpdf.version>
+		<itext-asian.version>5.2.0</itext-asian.version>
+		<commons-text.version>1.10.0</commons-text.version>
+		<log4j.version>2.19.0</log4j.version>
+		<log4j-slf4j-impl.version>2.19.0</log4j-slf4j-impl.version>
+		<slf4j.version>2.0.6</slf4j.version>
+		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+		<solr.version>8.11.1</solr.version>
+		<jackson.version>2.14.1</jackson.version>
+		<jackson-databind.version>2.14.1</jackson-databind.version>
+		<commons-lang3.version>3.12.0.redhat-00001</commons-lang3.version>
+		<commons-configuration2.version>2.8.0</commons-configuration2.version>
+		<snakeyaml.version>1.33.0.redhat-00001</snakeyaml.version>
+		<camel.version>3.18.3.redhat-00022</camel.version>
+		<kie.version>7.67.0.Final-redhat-00017</kie.version>
+		<drools.version>8.32.0.Final</drools.version>
+		<cloudevents.version>2.4.0</cloudevents.version>
+
+		<computate.version>4.3.3.20</computate.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>io.vertx</groupId>
+				<artifactId>vertx-dependencies</artifactId>
+				<version>${vertx.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- ###### -->
+		<!-- Vert.X -->
+		<!-- ###### -->
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-web-openapi</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-codegen</artifactId>
+			<classifier>processor</classifier>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-service-proxy</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-web-api-service</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-web-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-config-yaml</artifactId>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<!-- Deployment profile (required so these plugins are only used when deploying) -->
+		<profile>
+			<id>deploy</id>
+			<build>
+				<plugins>
+					<!-- Source plugin -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>${maven-source-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- Javadoc plugin -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>${maven-javadoc-plugin.version}</version>
+						<configuration>
+							<additionalJOption>-Xdoclint:none</additionalJOption>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- GPG plugin -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>${maven-gpg-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<configuration>
+									<!-- Prevent `gpg` from using pinentry programs -->
+									<gpgArguments>
+										<arg>--pinentry-mode</arg>
+										<arg>loopback</arg>
+									</gpgArguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<build>
+
+		<!-- Source Directory Configuration -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>${flatten-maven-plugin.version}</version>
+				<configuration>
+					<updatePomFile>true</updatePomFile>
+					<pomElements>
+						<name />
+						<description />
+						<url />
+						<inceptionYear />
+						<organization />
+						<scm />
+						<developers />
+						<contributors />
+						<mailingLists />
+					</pomElements>
+				</configuration>
+				<executions>
+					<execution>
+						<id>flatten</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Vert.X Code Generation -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+					<annotationProcessors>
+						<annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
+					</annotationProcessors>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven-jar-plugin.version}</version>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${build-helper-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/gen/java</source>
+								<source>target/generated-sources/annotations</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>io.reactiverse</groupId>
+				<artifactId>vertx-maven-plugin</artifactId>
+				<version>${vertx-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>vmp</id>
+						<goals>
+							<goal>initialize</goal>
+							<goal>package</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<redeploy>true</redeploy>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
